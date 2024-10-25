@@ -15,6 +15,11 @@ import org.example.Ollama.responseobject.ResponseObject;
 public class RequestFormat {
 
     private final String API_URL = "http://131.173.38.68:11434/api/chat";
+    private List<MessageObject> chatHistory = new ArrayList<>(){
+        {
+            add(new MessageObject("system", "You are a chatbot and you are able to answer questions shortly."));
+        }
+    };
 
     /**
      * Get a request from the message
@@ -30,7 +35,7 @@ public class RequestFormat {
         // Create the message object
         MessageObject messageObject = new MessageObject("user", message);
         // Create the request object
-        ChatRequestObject requestObject = new ChatRequestObject("llama3", getSystemPromptsWithMessage(messageObject), false);
+        ChatRequestObject requestObject = new ChatRequestObject("llama3", addNewMessageToHistory(messageObject), false);
 
         // Create the request
         return HttpRequest.newBuilder()
@@ -56,6 +61,10 @@ public class RequestFormat {
         // Get the content of the response
         response = responseObject.getMessage().getContent();
 
+        // Add the response to the chat history
+
+        addNewMessageToHistory(responseObject.getMessage());
+
         return response;
     }
 
@@ -64,10 +73,8 @@ public class RequestFormat {
      * @param messageObject the message object to add to the system prompts
      * @return the system prompts with the message
      */
-    private List<MessageObject> getSystemPromptsWithMessage(MessageObject messageObject) {
-        List<MessageObject> systemPrompts = new ArrayList<>();
-        systemPrompts.add(new MessageObject("system", "Welcome to Ollama!"));
-        systemPrompts.add(messageObject);
-        return systemPrompts;
+    private List<MessageObject> addNewMessageToHistory(MessageObject messageObject) {
+        chatHistory.add(messageObject);
+        return chatHistory;
     }
 }
