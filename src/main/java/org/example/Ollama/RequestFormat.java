@@ -20,7 +20,7 @@ public class RequestFormat {
      * Get a request from the message
      * @param message the chat message to send to the server
      * @return HttpRequest to send to the server
-     * @throws JsonProcessingException
+     * @throws JsonProcessingException if the request cannot be created
      */
     public HttpRequest getRequest(String message) throws JsonProcessingException {
         //Create a json object from the message
@@ -45,7 +45,7 @@ public class RequestFormat {
      * Parse the response from the chat model
      * @param response the response from the chat model
      * @return the content of the response
-     * @throws JsonProcessingException
+     * @throws JsonProcessingException if the response cannot be parsed
      */
     public String parseResponse(String response) throws JsonProcessingException {
         // Parse the response
