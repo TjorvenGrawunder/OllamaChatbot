@@ -5,6 +5,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Client class that sends messages to the chat model
+ */
 public class Client {
     private RequestFormat requestFormat;
     private final HttpClient CLIENT = HttpClient.newHttpClient();

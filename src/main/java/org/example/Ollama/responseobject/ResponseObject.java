@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.example.Ollama.messageobjects.ErrorObject;
 import org.example.Ollama.messageobjects.MessageObject;
 
+/**
+ * Response Object that is received from the server
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseObject {
     private MessageObject message;

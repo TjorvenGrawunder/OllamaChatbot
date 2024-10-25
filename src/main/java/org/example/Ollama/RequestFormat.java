@@ -16,11 +16,20 @@ public class RequestFormat {
 
     private final String API_URL = "http://131.173.38.68:11434/api/chat";
 
+    /**
+     * Get a request from the message
+     * @param message the chat message to send to the server
+     * @return HttpRequest to send to the server
+     * @throws JsonProcessingException
+     */
     public HttpRequest getRequest(String message) throws JsonProcessingException {
         //Create a json object from the message
         ObjectMapper mapper = new ObjectMapper();
+        // Ignore null values
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // Create the message object
         MessageObject messageObject = new MessageObject("user", message);
+        // Create the request object
         ChatRequestObject requestObject = new ChatRequestObject("llama3", getSystemPromptsWithMessage(messageObject), false);
 
         // Create the request
@@ -32,6 +41,12 @@ public class RequestFormat {
                 .build();
     }
 
+    /**
+     * Parse the response from the chat model
+     * @param response the response from the chat model
+     * @return the content of the response
+     * @throws JsonProcessingException
+     */
     public String parseResponse(String response) throws JsonProcessingException {
         // Parse the response
         ObjectMapper mapper = new ObjectMapper();
